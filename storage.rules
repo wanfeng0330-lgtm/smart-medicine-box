@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper function to check family membership via Firestore
+    function isFamilyMember(familyId) {
+      return firestore.get(/databases/(default)/documents/families/$(familyId))
+        .data.members.contains(request.auth.uid);
+    }
+
+    // Users avatar uploads
+    match /users/{userId}/{allPaths=**} {
+      // Read: Only authenticated users
+      allow read: if request.auth != null;
+      // Write: Only the user can upload their own avatar
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Medicine photos
+    match /medicines/{familyId}/{medicineId}/{allPaths=**} {
+      // Read: Family members can read
+      allow read: if request.auth != null && isFamilyMember(familyId);
+      // Write: Family members can upload
+      allow write: if request.auth != null && isFamilyMember(familyId);
+    }
+
+    // Prescription photos
+    match /prescriptions/{familyId}/{medicineId}/{allPaths=**} {
+      // Read: Family members can read
+      allow read: if request.auth != null && isFamilyMember(familyId);
+      // Write: Family members can upload
+      allow write: if request.auth != null && isFamilyMember(familyId);
+    }
+
+    // OCR images (temporary)
+    match /ocr/{sessionId}/{allPaths=**} {
+      // Read: Only the uploader
+      allow read: if request.auth != null && request.resource.metadata.uploadedBy == request.auth.uid;
+      // Write: Only the uploader
+      allow write: if request.auth != null
+        && request.resource.metadata.uploadedBy == request.auth.uid;
+    }
+
+    // General files
+    match /{allPaths=**} {
+      // Deny all other paths for security
+      allow read, write: if false;
+    }
+  }
+}
