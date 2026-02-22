@@ -3,10 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon, useTheme } from 'react-native-paper';
 
 import { HomeScreen } from '@screens/main/HomeScreen';
-import { BoxScreen } from '@screens/main/BoxScreen';
 import { MedicinesScreen } from '@screens/main/MedicinesScreen';
 import { ScheduleScreen } from '@screens/main/ScheduleScreen';
-import { ReportScreen } from '@screens/main/ReportScreen';
+import { BoxScreen } from '@screens/main/BoxScreen';
 import { FamilyScreen } from '@screens/family/FamilyScreen';
 
 import { MainTabParamList } from './types';
@@ -68,16 +67,6 @@ export const MainTabNavigator: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Box"
-        component={BoxScreen}
-        options={{
-          tabBarLabel: '药盒',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="package-variant" focused={focused} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Medicines"
         component={MedicinesScreen}
         options={{
@@ -98,12 +87,12 @@ export const MainTabNavigator: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Report"
-        component={ReportScreen}
+        name="Box"
+        component={BoxScreen}
         options={{
-          tabBarLabel: '报告',
+          tabBarLabel: '药盒',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="chart-bar" focused={focused} color={color} />
+            <TabBarIcon name="package-variant" focused={focused} color={color} />
           ),
         }}
       />
@@ -111,9 +100,9 @@ export const MainTabNavigator: React.FC = () => {
         name="Family"
         component={FamilyScreen}
         options={{
-          tabBarLabel: '家庭',
+          tabBarLabel: '我的',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="account-group" focused={focused} color={color} />
+            <TabBarIcon name="account-circle" focused={focused} color={color} />
           ),
         }}
       />

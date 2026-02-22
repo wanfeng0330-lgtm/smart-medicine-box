@@ -72,10 +72,9 @@ export type MainStackParamList = {
  */
 export type MainTabParamList = {
   Home: undefined;
-  Box: undefined;
   Medicines: undefined;
   Schedule: undefined;
-  Report: undefined;
+  Box: undefined;
   Family: undefined;
 };
 
