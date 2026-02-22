@@ -74,12 +74,27 @@ npm start
 - npm 或 yarn
 - [Expo Go](https://expo.dev/client) App（手机）
 
+### Firebase 配置
+
+1. 创建 Firebase 项目并启用服务：
+   - Authentication (Email/Password)
+   - Firestore Database
+   - Storage
+
+2. 创建 `.env` 文件：
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=your-api-key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+EXPO_PUBLIC_FIREBASE_APP_ID=your-app-id
+```
+
 ### 详细指南
 
 查看以下文档了解更多：
-- 📖 **[快速启动指南](QUICK_START.md)** - 最快上手
-- 🧪 **[测试运行指南](TESTING_GUIDE.md)** - 完整测试流程
-- 🔥 **[Firebase配置](medicine-box-app/docs/FIREBASE_SETUP.md)** - Firebase配置步骤
+- 📖 **[Firebase配置](medicine-box-app/docs/FIREBASE_SETUP.md)** - Firebase配置步骤
 - 📊 **[UI设计文档](medicine-box-app/docs/UI_DESIGN_OVERVIEW.md)** - 设计规范
 
 ---
@@ -155,11 +170,8 @@ medicine-box-app/
 
 | 文档 | 说明 |
 |------|------|
-| [快速启动指南](QUICK_START.md) | 30秒快速上手 |
-| [测试运行指南](TESTING_GUIDE.md) | 完整测试流程 |
 | [Firebase 配置](medicine-box-app/docs/FIREBASE_SETUP.md) | Firebase设置步骤 |
 | [UI 设计文档](medicine-box-app/docs/UI_DESIGN_OVERVIEW.md) | 设计规范 |
-| [项目完成总结](PROJECT_COMPLETION_SUMMARY.md) | 详细总结 |
 | [需求文档](specs/medicine-box-app/requirements.md) | 10大需求 |
 | [设计文档](specs/medicine-box-app/design.md) | 技术方案 |
 | [任务计划](specs/medicine-box-app/tasks.md) | 实施计划 |
@@ -264,8 +276,6 @@ npm run type-check # TypeScript 类型检查
 - 🔵 BLE功能使用模拟实现，需要实际硬件
 - 📡 条码扫描和OCR API待集成
 
-查看完整问题列表：[PROJECT_COMPLETION_SUMMARY.md](PROJECT_COMPLETION_SUMMARY.md)
-
 ---
 
 ## 📊 项目统计
@@ -311,7 +321,6 @@ TypeScript:    100%
 
 - **问题反馈**: 提交 [Issue](../../issues)
 - **功能建议**: 提交 [Discussion](../../discussions)
-- **邮件**: medicine-box@example.com
 
 ---
 

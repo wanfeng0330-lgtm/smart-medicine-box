@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check family membership
+    function isFamilyMember(familyId) {
+      return exists(/databases/$(database)/documents/families/$(familyId))
+        && request.auth != null
+        && get(/databases/$(database)/documents/families/$(familyId)).data.members.includes(request.auth.uid);
+    }
+
+    // Users: Only own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // 允许读取公共资料（仅用于家庭成员列表）
+      allow read: if request.auth != null
+        && exists(/databases/$(database)/documents/families/(
+          get(/databases/$(database)/documents/users/$(userId)).data.familyId
+        ))
+        && isFamilyMember(get(/databases/$(database)/documents/users/$(userId)).data.familyId);
+    }
+
+    // Families: Only family members can read, only admin can write
+    match /families/{familyId} {
+      allow read: if isFamilyMember(familyId);
+      allow create: if request.auth != null && request.resource.data.adminId == request.auth.uid;
+      allow update, delete: if request.auth != null
+        && get(/databases/$(database)/documents/families/$(familyId)).data.adminId == request.auth.uid;
+    }
+
+    // Medicines: Only family members can access
+    match /medicines/{medicineId} {
+      allow read, create: if request.auth != null
+        && (request.resource.data.familyId == null || isFamilyMember(request.resource.data.familyId));
+      allow update, delete: if request.auth != null
+        && isFamilyMember(resource.data.familyId);
+    }
+
+    // Schedules: Only family members can access
+    match /schedules/{scheduleId} {
+      allow read, create: if request.auth != null
+        && (request.resource.data.familyId == null || isFamilyMember(request.resource.data.familyId));
+      allow update, delete: if request.auth != null
+        && isFamilyMember(resource.data.familyId);
+    }
+
+    // Records: (Medication records) Only own records or family admins can read/write
+    match /records/{recordId} {
+      // 读取：只有记录所有者或家庭成员
+      allow read: if request.auth != null
+        && (resource.data.userId == request.auth.uid || isFamilyMember(resource.data.familyId));
+      // 创建：记录所有者或家庭成员
+      allow create: if request.auth != null
+        && (request.resource.data.userId == request.auth.uid || isFamilyMember(request.resource.data.familyId));
+      // 更新/删除：只有记录所有者
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+
+    // Devices: Only family members can access
+    match /devices/{deviceId} {
+      allow read, create: if request.auth != null
+        && (request.resource.data.familyId == null || isFamilyMember(request.resource.data.familyId));
+      allow update, delete: if request.auth != null
+        && isFamilyMember(resource.data.familyId);
+    }
+
+    // Notifications: Only own notifications
+    match /notifications/{notificationId} {
+      allow read, create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+    }
+  }
+}
