@@ -4,7 +4,7 @@
  */
 
 export const APP_CONFIG = {
-  DEV_MODE: true,
+  DEV_MODE: false,
   API_TIMEOUT: 30000,
   LOW_STOCK_THRESHOLD: 5,
   BOX_SLOT_COUNT: 8,

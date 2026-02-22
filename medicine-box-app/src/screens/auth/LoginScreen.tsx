@@ -115,39 +115,6 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     navigation.navigate('ForgotPassword');
   };
 
-  const handleDevLogin = () => {
-    const devUser = {
-      uid: 'dev_user_001',
-      email: 'dev@test.com',
-      nickname: '测试用户',
-    };
-    const devProfile = {
-      id: devUser.uid,
-      name: devUser.nickname,
-      email: devUser.email,
-      phone: null,
-      avatar: null,
-      familyId: 'dev_family_001',
-      role: 'admin' as const,
-      deviceId: null,
-      settings: {
-        quietMode: false,
-        lowStockThreshold: 5,
-        pushNotifications: true,
-        notificationSound: 'default',
-        language: 'zh-CN',
-      },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    useCloudBaseAuthStore.setState({
-      user: devUser,
-      userProfile: devProfile,
-      isLoggedIn: true,
-    });
-  };
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -312,18 +279,6 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 textColor={COLORS.primary}
               >
                 立即注册
-              </Button>
-            </View>
-
-            <View style={styles.devSection}>
-              <Button
-                mode="outlined"
-                onPress={handleDevLogin}
-                style={styles.devButton}
-                labelStyle={styles.devButtonLabel}
-                textColor={COLORS.primary}
-              >
-                开发者登录（测试）
               </Button>
             </View>
           </Surface>
@@ -567,25 +522,6 @@ const styles = StyleSheet.create({
   },
   registerButtonLabel: {
     fontSize: 16,
-    fontWeight: '600',
-    fontFamily: 'Lato_Medium',
-  },
-
-  devSection: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-    alignItems: 'center',
-  },
-  devButton: {
-    borderColor: COLORS.primary,
-    borderRadius: 18,
-    width: '100%',
-    minHeight: 54,
-  },
-  devButtonLabel: {
-    fontSize: 15,
     fontWeight: '600',
     fontFamily: 'Lato_Medium',
   },
