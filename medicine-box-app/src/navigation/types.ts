@@ -39,8 +39,8 @@ export type AuthStackParamList = {
  */
 export type MainStackParamList = {
   MainTab: undefined;
-  Family: undefined;
-  FamilyMembers: undefined;
+  FamilyMembers: { familyId?: string };
+  Report: undefined;
 
   // 药品管理
   AddMedicine: { medicine?: Medicine };

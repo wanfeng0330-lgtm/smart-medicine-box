@@ -3,13 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'react-native-paper';
 
 import { MainTabNavigator } from './MainTabNavigator';
-import { FamilyScreen } from '@screens/family/FamilyScreen';
 import { FamilyMembersScreen } from '@screens/family/FamilyMembersScreen';
 import { AddMedicineScreen } from '@screens/main/AddMedicineScreen';
 import { ScanBarcodeScreen } from '@screens/main/ScanBarcodeScreen';
 import { OCRScreen } from '@screens/main/OCRScreen';
 import { MedicineDetailScreen } from '@screens/main/MedicineDetailScreen';
 import { AddScheduleScreen } from '@screens/main/AddScheduleScreen';
+import { ReportScreen } from '@screens/main/ReportScreen';
 import { NotificationSettingsScreen } from '@screens/settings/NotificationSettingsScreen';
 import { AccessibilitySettingsScreen } from '@screens/settings/AccessibilitySettingsScreen';
 
@@ -55,17 +55,18 @@ export const MainNavigator: React.FC = () => {
         }}
       />
 
-      {/* 家庭组管理页面 */}
-      <Stack.Screen
-        name="Family"
-        component={FamilyScreen}
-        options={{ title: '家庭组' }}
-      />
-
+      {/* 家庭成员页面 */}
       <Stack.Screen
         name="FamilyMembers"
         component={FamilyMembersScreen}
         options={{ title: '家庭成员' }}
+      />
+
+      {/* 报告页面 */}
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{ headerShown: false }}
       />
 
       {/* 药品管理页面 */}
